@@ -10,7 +10,7 @@ namespace DPA_Musicsheets.MusicProperties
     class Staff
     {
         private List<Bar> bars = new List<Bar>();
-        private int tempo;
+        private int tempo { get; set; }
 
 
     }

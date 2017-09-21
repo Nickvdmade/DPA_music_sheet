@@ -103,6 +103,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Handlers\FileLoader.cs" />
     <Compile Include="Handlers\FileTypeHandler.cs" />
     <Compile Include="Handlers\LilypondHandler.cs" />
     <Compile Include="Handlers\MidiHandler.cs" />
@@ -114,6 +115,8 @@
     <Compile Include="Managers\FileHandler.cs" />
     <Compile Include="Models\LilypondToken.cs" />
     <Compile Include="Models\LilypondTokenKind.cs" />
+    <Compile Include="MusicFileTypes\Lilypond.cs" />
+    <Compile Include="MusicFileTypes\Midi.cs" />
     <Compile Include="MusicProperties\Bar.cs" />
     <Compile Include="MusicProperties\Note.cs" />
     <Compile Include="MusicProperties\NoteRestFactory.cs" />
@@ -215,6 +218,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

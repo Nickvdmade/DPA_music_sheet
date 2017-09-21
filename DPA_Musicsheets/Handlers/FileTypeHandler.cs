@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.Handlers
 {
-    class FileTypeHandler
+    interface IFileTypeHandler
     {
-        
+        void Load(string fileName);
+        void SaveToFile(string fileName);
     }
 }
