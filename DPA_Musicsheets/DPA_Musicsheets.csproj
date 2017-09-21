@@ -103,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Handlers\FileTypeHandler.cs" />
+    <Compile Include="Handlers\LilypondHandler.cs" />
+    <Compile Include="Handlers\MidiHandler.cs" />
+    <Compile Include="Handlers\PDFHandler.cs" />
     <Compile Include="Managers\MidiSequenceEventArgs.cs" />
     <Compile Include="Managers\WPFStaffsEventArgs.cs" />
     <Compile Include="Managers\LilypondEventArgs.cs" />
