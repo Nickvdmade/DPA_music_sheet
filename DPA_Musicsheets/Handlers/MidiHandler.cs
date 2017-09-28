@@ -18,27 +18,7 @@ namespace DPA_Musicsheets.Handlers
         void IFileTypeHandler.Load(string fileName)
         {
             midi = new Midi(fileName);
-            lilypond = new Lilypond(midi);
-        }
-
-        private StringBuilder CreateLilypond(Sequence midiSequence)
-        {
-            StringBuilder lilypondContent = new StringBuilder();
-            lilypondContent.AppendLine("\\relative c' {");
-            lilypondContent.AppendLine("\\clef treble");
-
-            int division = midiSequence.Division;
-            int previousMidiKey = 60; // Central C;
-            int previousNoteAbsoluteTicks = 0;
-            double percentageOfBarReached = 0;
-            bool startedNoteIsClosed = true;
             
-            for (int i = 0; i < midiSequence.Count(); i++)
-            {
-                
-            }
-
-            return lilypondContent;
         }
 
         void IFileTypeHandler.SaveToFile(string fileName)

@@ -15,10 +15,5 @@ namespace DPA_Musicsheets.MusicFileTypes
         {
             
         }
-
-        public Lilypond(Midi midi)
-        {
-            
-        }
     }
 }

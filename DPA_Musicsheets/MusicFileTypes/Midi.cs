@@ -19,10 +19,5 @@ namespace DPA_Musicsheets.MusicFileTypes
             MidiSequence.Load(fileName);
             MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
         }
-
-        public Midi(Lilypond lilypond)
-        {
-            
-        }
     }
 }

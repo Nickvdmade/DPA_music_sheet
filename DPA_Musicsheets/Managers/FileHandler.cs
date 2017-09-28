@@ -11,6 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using DPA_Musicsheets.MusicProperties;
+using Note = PSAMControlLibrary.Note;
+using Rest = PSAMControlLibrary.Rest;
 
 namespace DPA_Musicsheets.Managers
 {
@@ -38,6 +41,8 @@ namespace DPA_Musicsheets.Managers
         private int _beatNote = 4;    // De waarde van een beatnote.
         private int _bpm = 120;       // Aantal beatnotes per minute.
         private int _beatsPerBar;     // Aantal beatnotes per maat.
+
+        public Staff Staffs = new Staff();
 
         public void OpenFile(string fileName)
         {
@@ -91,6 +96,11 @@ namespace DPA_Musicsheets.Managers
             int previousNoteAbsoluteTicks = 0;
             double percentageOfBarReached = 0;
             bool startedNoteIsClosed = true;
+            MusicProperties.Note note = new MusicProperties.Note('a', 1, 0, 0);
+            Staffs.AddNote(note);
+            note = new MusicProperties.Note('c', 0.5, 1, 0);
+            Staffs.AddNote(note);
+            Staffs.Print();
 
             for (int i = 0; i < sequence.Count(); i++)
             {

@@ -7,11 +7,32 @@ using System.Windows;
 
 namespace DPA_Musicsheets.MusicProperties
 {
-    class Staff
+    public class Staff //notenbalk
     {
-        private List<Bar> bars = new List<Bar>();
+        private List<Bar> bars;
         private int tempo { get; set; }
 
+        public Staff()
+        {
+            bars = new List<Bar>();
+            Bar bar = new Bar();
+            bars.Add(bar);
+        }
 
+        public void AddNote(Note note)
+        {
+            Bar bar = bars[bars.Count - 1];
+            /*if (bar.isFull())
+            {
+                bar = new Bar();
+                bars.Add(bar);
+            }*/
+            bar.AddNote(note);
+        }
+
+        public void Print()
+        {
+            
+        }
     }
 }

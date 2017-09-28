@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.MusicProperties
 {
-    class Note
+    public class Note
     {
         private char pitch;
+        private double length;
         private int octave;
         private int change; //1 voor kruis, -1 voor mol
-        private double length;
 
-        public Note(char notePitch, double noteLength, int noteChange = 0, int noteOctave = 0)
+        public Note(char notePitch, double noteLength, int noteOctave = 0, int noteChange = 0)
         {
             pitch = notePitch;
             octave = noteOctave;
