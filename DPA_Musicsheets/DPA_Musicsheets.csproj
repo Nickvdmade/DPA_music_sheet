@@ -117,6 +117,7 @@
     <Compile Include="Models\LilypondTokenKind.cs" />
     <Compile Include="MusicFileTypes\Lilypond.cs" />
     <Compile Include="MusicFileTypes\Midi.cs" />
+    <Compile Include="MusicFileTypes\MidiMessage.cs" />
     <Compile Include="MusicProperties\Bar.cs" />
     <Compile Include="MusicProperties\Note.cs" />
     <Compile Include="MusicProperties\NoteRestFactory.cs" />

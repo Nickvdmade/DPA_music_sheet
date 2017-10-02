@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using DPA_Musicsheets.MusicFileTypes;
 using DPA_Musicsheets.MusicProperties;
 using Note = PSAMControlLibrary.Note;
 using Rest = PSAMControlLibrary.Rest;
@@ -48,6 +49,9 @@ namespace DPA_Musicsheets.Managers
         {
             if (Path.GetExtension(fileName).EndsWith(".mid"))
             {
+                Midi midi = new Midi(fileName);
+                midi.Open();
+                midi.ReadMidi();
                 MidiSequence = new Sequence();
                 MidiSequence.Load(fileName);
                 MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
@@ -96,11 +100,6 @@ namespace DPA_Musicsheets.Managers
             int previousNoteAbsoluteTicks = 0;
             double percentageOfBarReached = 0;
             bool startedNoteIsClosed = true;
-            MusicProperties.Note note = new MusicProperties.Note('a', 1, 0, 0);
-            Staffs.AddNote(note);
-            note = new MusicProperties.Note('c', 0.5, 1, 0);
-            Staffs.AddNote(note);
-            Staffs.Print();
 
             for (int i = 0; i < sequence.Count(); i++)
             {
@@ -153,6 +152,21 @@ namespace DPA_Musicsheets.Managers
                                 if(channelMessage.Data2 > 0) // Data2 = loudness
                                 {
                                     // Append the new note.
+                                    /*Dictionary<int, string> MIDInotes = new Dictionary<int, string>();
+                                    MIDInotes.Add(0, "c");
+                                    MIDInotes.Add(1, "cis");
+                                    MIDInotes.Add(2, "d");
+                                    MIDInotes.Add(3, "dis");
+                                    MIDInotes.Add(4, "e");
+                                    MIDInotes.Add(5, "f");
+                                    MIDInotes.Add(6, "fis");
+                                    MIDInotes.Add(7, "g");
+                                    MIDInotes.Add(8, "gis");
+                                    MIDInotes.Add(9, "a");
+                                    MIDInotes.Add(10, "ais");
+                                    MIDInotes.Add(11, "b");
+                                    MusicProperties.Note newNote = new MusicProperties.Note(pitch, length, octave);
+                                    */
                                     lilypondContent.Append(GetNoteName(previousMidiKey, channelMessage.Data1));
                                     
                                     previousMidiKey = channelMessage.Data1;

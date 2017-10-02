@@ -17,14 +17,31 @@ namespace DPA_Musicsheets.MusicProperties
             notes = new List<Note>();
         }
 
+        public void SetAmount(int amount)
+        {
+            this.amount = amount;
+        }
+
+        public void SetType(int type)
+        {
+            this.type = type;
+        }
+
         public void AddNote(Note note)
         {
             notes.Add(note);
         }
 
-        /*public bool IsFull()
+        public bool IsFull()
         {
-            
-        }*/
+            double length = 0;
+            foreach (Note note in notes)
+            {
+                length += note.GetLength();
+            }
+            if (length >= 1)
+                return true;
+            return false;
+        }
     }
 }

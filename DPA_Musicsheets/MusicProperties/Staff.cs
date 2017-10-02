@@ -10,7 +10,7 @@ namespace DPA_Musicsheets.MusicProperties
     public class Staff //notenbalk
     {
         private List<Bar> bars;
-        private int tempo { get; set; }
+        private int tempo;
 
         public Staff()
         {
@@ -19,14 +19,26 @@ namespace DPA_Musicsheets.MusicProperties
             bars.Add(bar);
         }
 
+        public void setTempo(int tempo)
+        {
+            this.tempo = tempo;
+        }
+
+        public void setBar(int amount, int type)
+        {
+            Bar bar = bars[bars.Count - 1];
+            bar.SetAmount(amount);
+            bar.SetType(type);
+        }
+
         public void AddNote(Note note)
         {
             Bar bar = bars[bars.Count - 1];
-            /*if (bar.isFull())
+            if (bar.IsFull())
             {
                 bar = new Bar();
                 bars.Add(bar);
-            }*/
+            }
             bar.AddNote(note);
         }
 
