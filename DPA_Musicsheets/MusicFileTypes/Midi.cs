@@ -27,15 +27,15 @@ namespace DPA_Musicsheets.MusicFileTypes
             MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
         }
 
-        public Staff ReadMidi()
+        public Staff ReadMidi(Staff staff)
         {
-            Staff staff = new Staff();
+            MidiMessage midiMessage = new MidiMessage();
             for (int i = 0; i < MidiSequence.Count(); i++)
             {
                 Track track = MidiSequence[i];
                 foreach (var midiEvent in track.Iterator())
                 {
-                    MidiMessage midiMessage = new MidiMessage(midiEvent.MidiMessage, midiEvent, MidiSequence.Division);
+                    midiMessage.SetMessage(midiEvent.MidiMessage, midiEvent, MidiSequence.Division);
                     midiMessage.HandleMessageType(staff);
                 }
             }

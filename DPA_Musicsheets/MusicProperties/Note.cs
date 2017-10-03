@@ -12,10 +12,14 @@ namespace DPA_Musicsheets.MusicProperties
         private double length;
         private int octave;
 
-        public Note(string notePitch, double noteLength, int noteOctave)
+        public Note(string notePitch, int noteOctave)
         {
             pitch = notePitch;
             octave = noteOctave;
+        }
+
+        public void SetLength(double noteLength)
+        {
             length = noteLength;
         }
 

@@ -103,11 +103,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Handlers\FileLoader.cs" />
-    <Compile Include="Handlers\FileTypeHandler.cs" />
-    <Compile Include="Handlers\LilypondHandler.cs" />
-    <Compile Include="Handlers\MidiHandler.cs" />
-    <Compile Include="Handlers\PDFHandler.cs" />
     <Compile Include="Managers\MidiSequenceEventArgs.cs" />
     <Compile Include="Managers\WPFStaffsEventArgs.cs" />
     <Compile Include="Managers\LilypondEventArgs.cs" />
@@ -118,6 +113,7 @@
     <Compile Include="MusicFileTypes\Lilypond.cs" />
     <Compile Include="MusicFileTypes\Midi.cs" />
     <Compile Include="MusicFileTypes\MidiMessage.cs" />
+    <Compile Include="MusicFileTypes\MIDInotes.cs" />
     <Compile Include="MusicProperties\Bar.cs" />
     <Compile Include="MusicProperties\Note.cs" />
     <Compile Include="MusicProperties\NoteRestFactory.cs" />

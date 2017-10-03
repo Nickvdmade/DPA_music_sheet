@@ -43,7 +43,7 @@ namespace DPA_Musicsheets.Managers
         private int _bpm = 120;       // Aantal beatnotes per minute.
         private int _beatsPerBar;     // Aantal beatnotes per maat.
 
-        public Staff Staffs = new Staff();
+        public Staff Staff = new Staff();
 
         public void OpenFile(string fileName)
         {
@@ -51,7 +51,7 @@ namespace DPA_Musicsheets.Managers
             {
                 Midi midi = new Midi(fileName);
                 midi.Open();
-                midi.ReadMidi();
+                midi.ReadMidi(Staff);
                 MidiSequence = new Sequence();
                 MidiSequence.Load(fileName);
                 MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });

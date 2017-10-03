@@ -11,6 +11,8 @@ namespace DPA_Musicsheets.MusicProperties
     {
         private List<Bar> bars;
         private int tempo;
+        private int amount;
+        private int type;
 
         public Staff()
         {
@@ -27,7 +29,9 @@ namespace DPA_Musicsheets.MusicProperties
         public void setBar(int amount, int type)
         {
             Bar bar = bars[bars.Count - 1];
+            this.amount = amount;
             bar.SetAmount(amount);
+            this.type = type;
             bar.SetType(type);
         }
 
@@ -37,6 +41,8 @@ namespace DPA_Musicsheets.MusicProperties
             if (bar.IsFull())
             {
                 bar = new Bar();
+                bar.SetAmount(amount);
+                bar.SetType(type);
                 bars.Add(bar);
             }
             bar.AddNote(note);

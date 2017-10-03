@@ -12,12 +12,14 @@ namespace DPA_Musicsheets.MusicFileTypes
     {
         private IMidiMessage midiMessage;
         private MidiEvent midiEvent;
+        private int beatNote; //amount of notes in one bar
+        private int beatsPerBar; //type of note in one bar
         private int division;
-        private int previousMidiKey = 60; // Central C;
-        private int previousNoteAbsoluteTicks = 0;
-        bool startedNoteIsClosed = true;
+        private int previousNoteAbsoluteTicks;
+        private bool startedNoteIsClosed = true;
+        private Note note;
 
-        public MidiMessage(IMidiMessage message, MidiEvent midiEvent, int division)
+        public void SetMessage(IMidiMessage message, MidiEvent midiEvent, int division)
         {
             midiMessage = message;
             this.midiEvent = midiEvent;
@@ -46,8 +48,8 @@ namespace DPA_Musicsheets.MusicFileTypes
             {
                 case MetaType.TimeSignature:
                     byte[] timeSignatureBytes = metaMessage.GetBytes();
-                    int beatNote = timeSignatureBytes[0];
-                    int beatsPerBar = (int)(1 / Math.Pow(timeSignatureBytes[1], -2));
+                    beatNote = timeSignatureBytes[0];
+                    beatsPerBar = (int)Math.Pow(timeSignatureBytes[1], 2);
                     staff.setBar(beatNote, beatsPerBar);
                     break;
                 case MetaType.Tempo:
@@ -67,28 +69,18 @@ namespace DPA_Musicsheets.MusicFileTypes
             {
                 if (channelMessage.Data2 > 0) // Data2 = loudness
                 {
-                    /*Dictionary<int, string> MIDInotes = new Dictionary<int, string>();
-                    MIDInotes.Add(0, "c");
-                    MIDInotes.Add(1, "cis");
-                    MIDInotes.Add(2, "d");
-                    MIDInotes.Add(3, "dis");
-                    MIDInotes.Add(4, "e");
-                    MIDInotes.Add(5, "f");
-                    MIDInotes.Add(6, "fis");
-                    MIDInotes.Add(7, "g");
-                    MIDInotes.Add(8, "gis");
-                    MIDInotes.Add(9, "a");
-                    MIDInotes.Add(10, "ais");
-                    MIDInotes.Add(11, "b");
-                    MusicProperties.Note newNote = new MusicProperties.Note(pitch, length, octave);
-                    */
+                    int octave = channelMessage.Data1 / 12;
+                    string pitch = Enum.GetName(typeof(MIDInotes), channelMessage.Data1 % 12);
+                    note = new Note(pitch, octave);
 
-                    previousMidiKey = channelMessage.Data1;
                     startedNoteIsClosed = false;
                 }
                 else if (!startedNoteIsClosed)
                 {
-                    // Finish the previous note with the length.
+                    double length = GetNoteLength(midiEvent.AbsoluteTicks);
+                    note.SetLength(length);
+                    staff.AddNote(note);
+
                     previousNoteAbsoluteTicks = midiEvent.AbsoluteTicks;
                     startedNoteIsClosed = true;
                 }
@@ -96,6 +88,15 @@ namespace DPA_Musicsheets.MusicFileTypes
                 {
                 }
             }
+        }
+
+        private double GetNoteLength(int absoluteTicks)
+        {
+            double deltaTicks = absoluteTicks - previousNoteAbsoluteTicks;
+            if (deltaTicks <= 0)
+                return 0.0;
+            double percentageOfBeatNote = deltaTicks / division;
+            return (1.0 / beatsPerBar) * percentageOfBeatNote;
         }
     }
 }
