@@ -52,6 +52,7 @@ namespace DPA_Musicsheets.Managers
                 Midi midi = new Midi(fileName);
                 midi.Open();
                 midi.ReadMidi(Staff);
+                
                 MidiSequence = new Sequence();
                 MidiSequence.Load(fileName);
                 MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
@@ -73,6 +74,9 @@ namespace DPA_Musicsheets.Managers
             {
                 throw new NotSupportedException($"File extension {Path.GetExtension(fileName)} is not supported.");
             }
+            WPFStaffs.Clear();
+            Staff.GetMusicSymbols(WPFStaffs);
+            WPFStaffsChanged?.Invoke(this, new WPFStaffsEventArgs() { Symbols = WPFStaffs, Message = "" });
         }
 
         public void LoadLilypond(string content)

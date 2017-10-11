@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.MusicProperties
 {
@@ -48,9 +49,13 @@ namespace DPA_Musicsheets.MusicProperties
             bar.AddNote(note);
         }
 
-        public void Print()
+        public void GetMusicSymbols(List<MusicalSymbol> WPFStaffs)
         {
-            
+            Clef clef = new Clef(ClefType.GClef, 2);
+            WPFStaffs.Add(clef);
+            WPFStaffs.Add(new TimeSignature(TimeSignatureType.Numbers, (UInt32)amount, (UInt32)type));
+            foreach (Bar bar in bars)
+                bar.GetMusicSymbols(WPFStaffs);
         }
     }
 }

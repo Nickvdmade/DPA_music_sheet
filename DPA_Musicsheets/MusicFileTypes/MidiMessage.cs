@@ -77,8 +77,9 @@ namespace DPA_Musicsheets.MusicFileTypes
                 }
                 else if (!startedNoteIsClosed)
                 {
-                    double length = GetNoteLength(midiEvent.AbsoluteTicks);
-                    note.SetLength(length);
+                    int dots = 0;
+                    int length = GetNoteLength(midiEvent.AbsoluteTicks, out dots);
+                    note.SetLength(length, dots);
                     staff.AddNote(note);
 
                     previousNoteAbsoluteTicks = midiEvent.AbsoluteTicks;
@@ -90,13 +91,47 @@ namespace DPA_Musicsheets.MusicFileTypes
             }
         }
 
-        private double GetNoteLength(int absoluteTicks)
+        private int GetNoteLength(int absoluteTicks, out int dots)
         {
             double deltaTicks = absoluteTicks - previousNoteAbsoluteTicks;
             if (deltaTicks <= 0)
-                return 0.0;
+            {
+                dots = 0;
+                return 0;
+            }
             double percentageOfBeatNote = deltaTicks / division;
-            return (1.0 / beatsPerBar) * percentageOfBeatNote;
+            double noteLength = percentageOfBeatNote / beatsPerBar;
+            int singleLength = 0;
+            while (noteLength >= 0.03125)
+            {
+                noteLength -= 0.03125;
+                singleLength++;
+            }
+            int baseLength = GetPowerValue(singleLength);
+            noteLength = (singleLength - baseLength) * 0.03125;
+            int baseNote = 32 / baseLength;
+            dots = GetDotAmount(noteLength, baseNote);
+            return baseNote;
+        }
+
+        private int GetDotAmount(double dotLength, double baseNote)
+        {
+            int dots = 0;
+            while (dotLength >= 1 / (baseNote * 2))
+            {
+                dots++;
+                dotLength -= 1 / (baseNote * 2);
+                baseNote = baseNote * 2;
+            }
+            return dots;
+        }
+
+        private int GetPowerValue(int x)
+        {
+            int result = (x & (x - 1));
+            if (result != 0)
+                return result;
+            return x;
         }
     }
 }

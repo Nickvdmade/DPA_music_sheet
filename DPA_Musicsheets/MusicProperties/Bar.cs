@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.MusicProperties
 {
     class Bar //maat
     {
-        private int amount;
-        private int type;
+        private double amount;
+        private double type;
         List<Note> notes;
 
         public Bar()
@@ -39,9 +40,16 @@ namespace DPA_Musicsheets.MusicProperties
             {
                 length += note.GetLength();
             }
-            if (length >= 1)
+            if (length >= (amount / type))
                 return true;
             return false;
+        }
+
+        public void GetMusicSymbols(List<MusicalSymbol> WPFStaffs)
+        {
+            foreach(Note note in notes)
+                note.GetMusicSymbols(WPFStaffs);
+            WPFStaffs.Add(new Barline());
         }
     }
 }
