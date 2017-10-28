@@ -39,6 +39,7 @@ namespace DPA_Musicsheets.MusicFileTypes
                     midiMessage.HandleMessageType(staff);
                 }
             }
+            staff.CheckLastBar();
             return staff;
         }
     }

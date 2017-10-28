@@ -53,13 +53,14 @@ namespace DPA_Musicsheets.Managers
                 midi.Open();
                 midi.ReadMidi(Staff);
                 
-                MidiSequence = new Sequence();
-                MidiSequence.Load(fileName);
-                MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
-                LoadMidi(MidiSequence);
+                //LoadMidi(MidiSequence);
             }
             else if (Path.GetExtension(fileName).EndsWith(".ly"))
             {
+                Lilypond lily = new Lilypond(fileName);
+                lily.Open();
+                lily.ReadLily(Staff);
+
                 StringBuilder sb = new StringBuilder();
                 foreach (var line in File.ReadAllLines(fileName))
                 {
@@ -76,7 +77,8 @@ namespace DPA_Musicsheets.Managers
             }
             WPFStaffs.Clear();
             Staff.GetMusicSymbols(WPFStaffs);
-            WPFStaffsChanged?.Invoke(this, new WPFStaffsEventArgs() { Symbols = WPFStaffs, Message = "" });
+            WPFStaffsChanged?.Invoke(this, new WPFStaffsEventArgs() { Symbols = WPFStaffs});
+
         }
 
         public void LoadLilypond(string content)

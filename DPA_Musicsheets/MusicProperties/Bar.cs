@@ -9,13 +9,13 @@ namespace DPA_Musicsheets.MusicProperties
 {
     class Bar //maat
     {
-        private double amount;
-        private double type;
-        List<Note> notes;
+        private int amount;
+        private int type;
+        private List<NoteRestFactory> notes;
 
         public Bar()
         {
-            notes = new List<Note>();
+            notes = new List<NoteRestFactory>();
         }
 
         public void SetAmount(int amount)
@@ -28,26 +28,99 @@ namespace DPA_Musicsheets.MusicProperties
             this.type = type;
         }
 
-        public void AddNote(Note note)
+        public void AddNote(NoteRestFactory note)
         {
             notes.Add(note);
         }
 
-        public bool IsFull()
+        public void Fill()
+        {
+            Dictionary<int, int> lengths = new Dictionary<int, int>();
+            for (int i = 32; i >= 1; i = i / 2)
+                lengths[i] = 0;
+            foreach (NoteRestFactory note in notes)
+            {
+                lengths = note.GetLength(lengths);
+            }
+            for (int i = 32; i > type; i = i / 2)
+            {
+                while (lengths[i] >= 2)
+                {
+                    lengths[i / 2]++;
+                    lengths[i] -= 2;
+                }
+            }
+            for (int i = 1; i < type; i = i * 2)
+            {
+                while (lengths[i] >= 1)
+                {
+                    lengths[i * 2] += 2;
+                    lengths[i]--;
+                }
+            }
+            if (lengths[type] > amount)
+                throw new Exception("Bar too full");
+            if (lengths[type] < amount)
+                for (int i = 32; i >= type; i = i / 2)
+                {
+                    if (i == type)
+                    {
+                        if (lengths[type] < amount)
+                        {
+                            int restLength = amount - lengths[type];
+                            for (int j = 0; j < restLength; j++)
+                                AddNote(new Rest(type));
+                        }
+                    }
+                    else
+                    {
+                        if (lengths[i] == 1)
+                        {
+                            AddNote(new Rest(i));
+                            lengths[i]++;
+                        }
+                        if (lengths[i] == 2)
+                        {
+                            lengths[i / 2]++;
+                            lengths[i] -= 2;
+                        }
+                    }
+                }
+        }
+
+        public bool IsFull(List<Bar> bars)
         {
             double length = 0;
-            foreach (Note note in notes)
+            foreach (NoteRestFactory note in notes)
             {
                 length += note.GetLength();
             }
-            if (length >= (amount / type))
+            if (length == (double) amount / type)
+            {
+                Bar bar = new Bar();
+                bar.SetAmount(amount);
+                bar.SetType(type);
+                bars.Add(bar);
                 return true;
+            }
+            if (length > (double) amount / type)
+            {
+                NoteRestFactory lastNote = notes[notes.Count - 1];
+                notes.Remove(lastNote);
+                Bar bar = new Bar();
+                bar.SetAmount(amount);
+                bar.SetType(type);
+                bar.AddNote(lastNote);
+                bars.Add(bar);
+                Fill();
+                return true;
+            }
             return false;
         }
 
         public void GetMusicSymbols(List<MusicalSymbol> WPFStaffs)
         {
-            foreach(Note note in notes)
+            foreach(NoteRestFactory note in notes)
                 note.GetMusicSymbols(WPFStaffs);
             WPFStaffs.Add(new Barline());
         }

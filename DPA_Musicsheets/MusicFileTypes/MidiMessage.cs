@@ -128,7 +128,7 @@ namespace DPA_Musicsheets.MusicFileTypes
 
         private int GetPowerValue(int x)
         {
-            int result = (x & (x - 1));
+            int result = x & (x - 1);
             if (result != 0)
                 return result;
             return x;

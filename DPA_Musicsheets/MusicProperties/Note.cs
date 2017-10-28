@@ -8,10 +8,9 @@ using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.MusicProperties
 {
-    public class Note
+    public class Note : NoteRestFactory
     {
         private string pitch;
-        private int length;
         private int dots;
         private int octave;
 
@@ -21,25 +20,37 @@ namespace DPA_Musicsheets.MusicProperties
             octave = noteOctave - 1;
         }
 
-        public void SetLength(int noteLength, int dotAmount)
+        public override void SetLength(int noteLength, int dotAmount)
         {
             length = noteLength;
             dots = dotAmount;
         }
 
-        public double GetLength()
+        public override double GetLength()
         {
             double noteLength = 1.0 / length;
-            double tempLength = length / 2.0;
+            double tempLength = length * 2.0;
             for (int i = 0; i < dots; i++)
             {
                 noteLength += 1 / tempLength;
-                tempLength = tempLength / 2;
+                tempLength = tempLength * 2;
             }
             return noteLength;
         }
 
-        public void GetMusicSymbols(List<MusicalSymbol> WPFStaffs)
+        public override Dictionary<int, int> GetLength(Dictionary<int, int> lengths)
+        {
+            lengths[length]++;
+            int tempLength = length * 2;
+            for (int i = 0; i < dots; i++)
+            {
+                lengths[tempLength]++;
+                tempLength = tempLength * 2;
+            }
+            return lengths;
+        }
+
+        public override void GetMusicSymbols(List<MusicalSymbol> WPFStaffs)
         {
             int alter = 0;
             alter += Regex.Matches(pitch, "is").Count;
