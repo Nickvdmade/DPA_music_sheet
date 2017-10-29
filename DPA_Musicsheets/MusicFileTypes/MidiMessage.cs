@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DPA_Musicsheets.MusicProperties;
 using Sanford.Multimedia.Midi;
 
@@ -50,13 +46,13 @@ namespace DPA_Musicsheets.MusicFileTypes
                     byte[] timeSignatureBytes = metaMessage.GetBytes();
                     beatNote = timeSignatureBytes[0];
                     beatsPerBar = (int)Math.Pow(timeSignatureBytes[1], 2);
-                    staff.setBar(beatNote, beatsPerBar);
+                    staff.SetBar(beatNote, beatsPerBar);
                     break;
                 case MetaType.Tempo:
                     byte[] tempoBytes = metaMessage.GetBytes();
                     int tempo = (tempoBytes[0] & 0xff) << 16 | (tempoBytes[1] & 0xff) << 8 | (tempoBytes[2] & 0xff);
                     int bpm = 60000000 / tempo;
-                    staff.setTempo(bpm);
+                    staff.SetTempo(bpm);
                     break;
                 default: break;
             }

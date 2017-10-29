@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.MusicProperties
@@ -59,6 +55,22 @@ namespace DPA_Musicsheets.MusicProperties
                 (MusicalSymbolDuration) length, NoteStemDirection.Up, NoteTieType.None,
                 new List<NoteBeamType>() {NoteBeamType.Single}) {NumberOfDots = dots};
             WPFStaffs.Add(note);
+        }
+
+        public override string GetString(int previousOctave, out int newOctave)
+        {
+            string result = pitch;
+            if (octave < previousOctave)
+                for (int i = octave; i < previousOctave; i++)
+                    result += ",";
+            if (octave > previousOctave)
+                for (int i = octave; i > previousOctave; i--)
+                    result += "'";
+            newOctave = octave;
+            result += length;
+            for (int i = 0; i < dots; i++)
+                result += ".";
+            return result;
         }
     }
 }

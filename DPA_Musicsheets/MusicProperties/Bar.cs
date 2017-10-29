@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.MusicProperties
@@ -31,6 +28,16 @@ namespace DPA_Musicsheets.MusicProperties
         public void AddNote(NoteRestFactory note)
         {
             notes.Add(note);
+        }
+
+        public string GetNotes(int previousOctave, out int newOctave)
+        {
+            string result = "";
+            for (int i = 0; i < notes.Count; i++)
+                result += notes[i].GetString(previousOctave, out previousOctave) + " ";
+            result += "|";
+            newOctave = previousOctave;
+            return result;
         }
 
         public void Fill()

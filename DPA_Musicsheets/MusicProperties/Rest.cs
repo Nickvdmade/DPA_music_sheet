@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.MusicProperties
@@ -12,7 +7,7 @@ namespace DPA_Musicsheets.MusicProperties
     {
         public Rest(int length)
         {
-            base.length = length;
+            this.length = length;
         }
 
         public override double GetLength()
@@ -24,6 +19,12 @@ namespace DPA_Musicsheets.MusicProperties
         {
             var rest = new PSAMControlLibrary.Rest((MusicalSymbolDuration) length);
             WPFStaffs.Add(rest);
+        }
+
+        public override string GetString(int previousOctave, out int newOctave)
+        {
+            newOctave = previousOctave;
+            return "r" + length;
         }
     }
 }

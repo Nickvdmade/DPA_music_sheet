@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using DPA_Musicsheets.MusicProperties;
 
 namespace DPA_Musicsheets.MusicFileTypes
@@ -38,6 +35,39 @@ namespace DPA_Musicsheets.MusicFileTypes
             return ReadTokens(staff, content);
         }
 
+        public void SaveToFile(Staff staff)
+        {
+            using (StreamWriter outputFile = new StreamWriter(fileName))
+            {
+                outputFile.Write(GetLilyFromStaff(staff));
+                outputFile.Close();
+            }
+        }
+
+        public string GetLilyFromStaff(Staff staff)
+        {
+            StringBuilder lilypondContent = new StringBuilder();
+            int relativeStaffOctave = staff.GetRelativeOctave();
+            lilypondContent.Append("\\relative c");
+            if (relativeStaffOctave < 4)
+                for (int i = relativeStaffOctave; i < 4; i++)
+                    lilypondContent.Append(",");
+            if (relativeStaffOctave > 4)
+                for (int i = relativeStaffOctave; i > 4; i--)
+                    lilypondContent.Append("'");
+            lilypondContent.AppendLine(" {");
+            lilypondContent.AppendLine("\t\\clef " + staff.GetClef());
+            int[] time = staff.GetTime();
+            lilypondContent.AppendLine("\t\\time " + time[0] + "/" + time[1]);
+            lilypondContent.AppendLine("\t\\tempo 4=" + staff.GetTempo());
+
+            int barAmount = staff.GetBarAmount();
+            for (int i = 0; i < barAmount; i++)
+                lilypondContent.AppendLine("\t" + staff.GetBar(i));
+            lilypondContent.AppendLine("}");
+            return lilypondContent.ToString();
+        }
+
         private Staff ReadTokens(Staff staff, string content)
         {
             string[] splitContent = content.Split(' ');
@@ -50,6 +80,7 @@ namespace DPA_Musicsheets.MusicFileTypes
                         i++;
                         string relative = splitContent[i];
                         relativeOctave = 4 + relative.Count(x => x == '\'') - relative.Count(x => x == ',');
+                        staff.SetRelativeOctave(relativeOctave);
                         break;
                     case "\\clef":
                         i++;
@@ -59,13 +90,13 @@ namespace DPA_Musicsheets.MusicFileTypes
                         i++;
                         string time = splitContent[i];
                         var times = time.Split('/');
-                        staff.setBar((int) UInt32.Parse(times[0]), (int) UInt32.Parse(times[1]));
+                        staff.SetBar((int) UInt32.Parse(times[0]), (int) UInt32.Parse(times[1]));
                         break;
                     case "\\tempo":
                         i++;
                         string tempoText = splitContent[i];
                         var tempo = tempoText.Split('=');
-                        staff.setTempo((int) UInt32.Parse(tempo[1]));
+                        staff.SetTempo((int) UInt32.Parse(tempo[1]));
                         break;
                     case "|":
                         staff.AddBar();

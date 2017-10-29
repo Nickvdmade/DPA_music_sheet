@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.MusicProperties
@@ -15,6 +11,8 @@ namespace DPA_Musicsheets.MusicProperties
         private int amount;
         private int type;
         private string clefType;
+        private int relativeOctave;
+        private int previousOctave;
 
         public Staff()
         {
@@ -22,14 +20,31 @@ namespace DPA_Musicsheets.MusicProperties
             Bar bar = new Bar();
             bars.Add(bar);
             clefType = "treble";
+            relativeOctave = 4;
+            previousOctave = 4;
         }
 
-        public void setTempo(int tempo)
+        public void Clear()
+        {
+            bars = new List<Bar>();
+            Bar bar = new Bar();
+            bars.Add(bar);
+            clefType = "treble";
+            relativeOctave = 4;
+            previousOctave = 4;
+        }
+
+        public void SetTempo(int tempo)
         {
             this.tempo = tempo;
         }
 
-        public void setBar(int amount, int type)
+        public int GetTempo()
+        {
+            return tempo;
+        }
+
+        public void SetBar(int amount, int type)
         {
             if (GetPowerValue(type) != 0)
                 throw new Exception("Impossible time");
@@ -40,9 +55,41 @@ namespace DPA_Musicsheets.MusicProperties
             bar.SetType(type);
         }
 
+        public int GetBarAmount()
+        {
+            return bars.Count;
+        }
+
+        public string GetBar(int position)
+        {
+            return bars[position].GetNotes(previousOctave, out previousOctave);
+        }
+
+        public int[] GetTime()
+        {
+            int[] time = {amount, type};
+            return time;
+        }
+
         public void SetClef(string clef)
         {
             clefType = clef;
+        }
+
+        public string GetClef()
+        {
+            return clefType;
+        }
+
+        public void SetRelativeOctave(int octave)
+        {
+            relativeOctave = octave;
+            previousOctave = octave;
+        }
+
+        public int GetRelativeOctave()
+        {
+            return relativeOctave;
         }
 
         public void AddBar()
@@ -78,7 +125,7 @@ namespace DPA_Musicsheets.MusicProperties
         public void GetMusicSymbols(List<MusicalSymbol> WPFStaffs)
         {
             Clef clef = new Clef(ClefType.GClef, 2);
-            if (this.clefType == "bass")
+            if (clefType == "bass")
             {
                 clef = new Clef(ClefType.CClef, 4);
             }

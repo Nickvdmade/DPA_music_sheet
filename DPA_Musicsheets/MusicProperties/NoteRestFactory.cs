@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.MusicProperties
@@ -26,6 +22,12 @@ namespace DPA_Musicsheets.MusicProperties
         public virtual Dictionary<int, int> GetLength(Dictionary<int, int> lengths)
         {
             return lengths;
+        }
+
+        public virtual string GetString(int previousOctave, out int newOctave)
+        {
+            newOctave = previousOctave;
+            return "";
         }
     }
 }
