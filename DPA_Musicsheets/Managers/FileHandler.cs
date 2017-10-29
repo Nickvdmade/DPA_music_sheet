@@ -64,14 +64,7 @@ namespace DPA_Musicsheets.Managers
             {
                 throw new NotSupportedException($"File extension {Path.GetExtension(fileName)} is not supported.");
             }
-            WPFStaffs.Clear();
-            Staff.GetMusicSymbols(WPFStaffs);
-            WPFStaffsChanged?.Invoke(this, new WPFStaffsEventArgs() { Symbols = WPFStaffs});
-
-            LilypondText = lily.GetLilyFromStaff(Staff);
-
-            MidiSequence = midi.GetSequenceFromStaff(Staff);
-            MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
+            ShowStaff();
         }
 
 
