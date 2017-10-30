@@ -72,6 +72,8 @@ namespace DPA_Musicsheets.MusicFileTypes
             for (int i = 0; i < barAmount; i++)
                 lilypondContent.AppendLine("" + staff.GetBar(i));
             lilypondContent.AppendLine("}");
+            staff.SetRelativePitch(staff.GetRelativePitch());
+            staff.SetRelativeOctave(staff.GetRelativeOctave());
             return lilypondContent.ToString();
         }
 

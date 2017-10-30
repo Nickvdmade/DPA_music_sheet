@@ -14,6 +14,7 @@ namespace DPA_Musicsheets.Shortcuts
         }
         public override void Execute(FileHandler fileHandler, MainViewModel mainViewModel)
         {
+
         }
     }
 }

@@ -1,19 +1,12 @@
-﻿
-using PSAMControlLibrary;
-using PSAMWPFControlLibrary;
+﻿using PSAMControlLibrary;
 using Sanford.Multimedia.Midi;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Windows;
 using DPA_Musicsheets.MusicFileTypes;
 using DPA_Musicsheets.MusicProperties;
-using Note = PSAMControlLibrary.Note;
-using Rest = PSAMControlLibrary.Rest;
+using Microsoft.Win32;
 
 namespace DPA_Musicsheets.Managers
 {
@@ -30,7 +23,6 @@ namespace DPA_Musicsheets.Managers
             }
         }
         public List<MusicalSymbol> WPFStaffs { get; set; } = new List<MusicalSymbol>();
-        private static List<Char> notesorder = new List<Char> { 'c', 'd', 'e', 'f', 'g', 'a', 'b' };
 
         public Sequence MidiSequence { get; set; }
 
@@ -43,6 +35,7 @@ namespace DPA_Musicsheets.Managers
         private int _beatsPerBar;     // Aantal beatnotes per maat.
 
         public Staff Staff = new Staff();
+        private string originalLily;
 
         public void OpenFile(string fileName)
         {
@@ -63,6 +56,7 @@ namespace DPA_Musicsheets.Managers
             {
                 throw new NotSupportedException($"File extension {Path.GetExtension(fileName)} is not supported.");
             }
+            originalLily = lily.GetLilyFromStaff(Staff);
             ShowStaff();
         }
 
@@ -82,14 +76,41 @@ namespace DPA_Musicsheets.Managers
 
         public void ShowStaff(string content)
         {
+            if (content != null)
+            {
+                LilypondText = content;
+            }
             Staff.Clear();
-            LilypondText = content;
             Lilypond lily = new Lilypond("");
             Staff = lily.ReadLily(Staff, LilypondText);
             ShowStaff();
         }
 
         #region Saving to files
+        void Save()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog() { Filter = "Midi|*.mid|Lilypond|*.ly|PDF|*.pdf" };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string extension = Path.GetExtension(saveFileDialog.FileName);
+                if (extension.EndsWith(".mid"))
+                {
+                    SaveToMidi(saveFileDialog.FileName);
+                }
+                else if (extension.EndsWith(".ly"))
+                {
+                    SaveToLilypond(saveFileDialog.FileName);
+                }
+                else if (extension.EndsWith(".pdf"))
+                {
+                    SaveToPDF(saveFileDialog.FileName);
+                }
+                else
+                {
+                    MessageBox.Show($"Extension {extension} is not supported.");
+                }
+            }
+        }
         internal void SaveToMidi(string fileName)
         {
             Midi midi = new Midi(fileName);
@@ -108,5 +129,17 @@ namespace DPA_Musicsheets.Managers
             lily.SaveToFile(Staff);
         }
         #endregion Saving to files
+
+        public void CheckForChange()
+        {
+            Lilypond lily = new Lilypond("");
+            string finalLily = lily.GetLilyFromStaff(Staff);
+            if (finalLily != originalLily)
+            {
+                var result = MessageBox.Show("Save changes?", "Close program", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                    Save();
+            }
+        }
     }
 }

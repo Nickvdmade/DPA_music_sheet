@@ -49,7 +49,7 @@ namespace DPA_Musicsheets.ViewModels
             _fileHandler.LilypondTextChanged += (src, e) =>
             {
                 _textChangedByLoad = true;
-                LilypondText = _previousText = e.LilypondText;
+                LilypondText = e.LilypondText;
                 _textChangedByLoad = false;
             };
 
@@ -79,17 +79,23 @@ namespace DPA_Musicsheets.ViewModels
 
         public RelayCommand UndoCommand => new RelayCommand(() =>
         {
-            _nextText = LilypondText;
-            LilypondText = _previousText;
-            _previousText = null;
+            if (_previousText != null)
+            {
+                _nextText = LilypondText;
+                LilypondText = _previousText;
+                _previousText = null;
+            }
         }, () => _previousText != LilypondText);
 
         public RelayCommand RedoCommand => new RelayCommand(() =>
         {
-            _previousText = LilypondText;
-            LilypondText = _nextText;
-            _nextText = null;
-            RedoCommand.RaiseCanExecuteChanged();
+            if (_nextText != null)
+            {
+                _previousText = LilypondText;
+                LilypondText = _nextText;
+                _nextText = null;
+                RedoCommand.RaiseCanExecuteChanged();
+            }
         }, () => _nextText != LilypondText);
 
         public ICommand SaveAsCommand => new RelayCommand(() =>

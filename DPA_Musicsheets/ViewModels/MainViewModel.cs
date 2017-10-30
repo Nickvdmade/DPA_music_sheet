@@ -112,6 +112,7 @@ namespace DPA_Musicsheets.ViewModels
 
         public ICommand OnWindowClosingCommand => new RelayCommand(() =>
         {
+            _fileHandler.CheckForChange();
             ViewModelLocator.Cleanup();
         });
     }
