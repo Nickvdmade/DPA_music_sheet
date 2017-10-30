@@ -71,7 +71,7 @@ namespace DPA_Musicsheets.ViewModels
                         _waitingForRender = false;
                         UndoCommand.RaiseCanExecuteChanged();
 
-                        _fileHandler.ShowStaff();
+                        _fileHandler.ShowStaff(LilypondText);
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext()); // Request from main thread.
             }

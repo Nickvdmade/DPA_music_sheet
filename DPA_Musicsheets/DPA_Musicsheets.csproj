@@ -108,8 +108,6 @@
     <Compile Include="Managers\LilypondEventArgs.cs" />
     <Compile Include="Messages\CurrentStateMessage.cs" />
     <Compile Include="Managers\FileHandler.cs" />
-    <Compile Include="Models\LilypondToken.cs" />
-    <Compile Include="Models\LilypondTokenKind.cs" />
     <Compile Include="MusicFileTypes\Lilypond.cs" />
     <Compile Include="MusicFileTypes\Midi.cs" />
     <Compile Include="MusicFileTypes\MidiMessage.cs" />
@@ -120,6 +118,13 @@
     <Compile Include="MusicProperties\NoteRestFactory.cs" />
     <Compile Include="MusicProperties\Rest.cs" />
     <Compile Include="MusicProperties\Staff.cs" />
+    <Compile Include="Shortcuts\Command.cs" />
+    <Compile Include="Shortcuts\InsertClef.cs" />
+    <Compile Include="Shortcuts\InsertTempo.cs" />
+    <Compile Include="Shortcuts\InsertTime.cs" />
+    <Compile Include="Shortcuts\OpenFile.cs" />
+    <Compile Include="Shortcuts\SaveAsLily.cs" />
+    <Compile Include="Shortcuts\SaveToPDF.cs" />
     <Compile Include="ViewModels\MidiPlayerViewModel.cs" />
     <Compile Include="ViewModels\StaffsViewModel.cs" />
     <Compile Include="Views\MidiPlayerCtrl.xaml.cs">

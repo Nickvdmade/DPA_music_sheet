@@ -13,6 +13,7 @@ namespace DPA_Musicsheets.MusicProperties
         private string clefType;
         private int relativeOctave;
         private int previousOctave;
+        private string relativePitch;
 
         public Staff()
         {
@@ -22,6 +23,7 @@ namespace DPA_Musicsheets.MusicProperties
             clefType = "treble";
             relativeOctave = 4;
             previousOctave = 4;
+            relativePitch = "c";
         }
 
         public void Clear()
@@ -32,6 +34,7 @@ namespace DPA_Musicsheets.MusicProperties
             clefType = "treble";
             relativeOctave = 4;
             previousOctave = 4;
+            relativePitch = "c";
         }
 
         public void SetTempo(int tempo)
@@ -62,7 +65,10 @@ namespace DPA_Musicsheets.MusicProperties
 
         public string GetBar(int position)
         {
-            return bars[position].GetNotes(previousOctave, out previousOctave);
+            string result = bars[position].GetNotes(previousOctave, relativePitch, out previousOctave, out relativePitch);
+            if (position != bars.Count - 1)
+                result += "|";
+            return result;
         }
 
         public int[] GetTime()
@@ -90,6 +96,11 @@ namespace DPA_Musicsheets.MusicProperties
         public int GetRelativeOctave()
         {
             return relativeOctave;
+        }
+
+        public void SetRelativePitch(string pitch)
+        {
+            relativePitch = pitch;
         }
 
         public void AddBar()

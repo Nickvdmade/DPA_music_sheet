@@ -21,9 +21,10 @@ namespace DPA_Musicsheets.MusicProperties
             WPFStaffs.Add(rest);
         }
 
-        public override string GetString(int previousOctave, out int newOctave)
+        public override string GetString(int previousOctave, string relativePitch, out int newOctave, out string newPitch)
         {
             newOctave = previousOctave;
+            newPitch = relativePitch;
             return "r" + length;
         }
     }

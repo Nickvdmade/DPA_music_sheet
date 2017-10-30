@@ -1,5 +1,4 @@
 ﻿
-using DPA_Musicsheets.Models;
 using PSAMControlLibrary;
 using PSAMWPFControlLibrary;
 using Sanford.Multimedia.Midi;
@@ -67,7 +66,6 @@ namespace DPA_Musicsheets.Managers
             ShowStaff();
         }
 
-
         public void ShowStaff()
         {
             WPFStaffs.Clear();
@@ -80,6 +78,15 @@ namespace DPA_Musicsheets.Managers
             Midi midi = new Midi("");
             MidiSequence = midi.GetSequenceFromStaff(Staff);
             MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
+        }
+
+        public void ShowStaff(string content)
+        {
+            Staff.Clear();
+            LilypondText = content;
+            Lilypond lily = new Lilypond("");
+            Staff = lily.ReadLily(Staff, LilypondText);
+            ShowStaff();
         }
 
         #region Saving to files

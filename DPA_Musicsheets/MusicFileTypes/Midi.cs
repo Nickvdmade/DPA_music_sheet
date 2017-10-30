@@ -107,10 +107,7 @@ namespace DPA_Musicsheets.MusicFileTypes
                         relationToQuartNote = time[1] / 4.0;
                         percentageOfBeatNote = (1.0 / time[1]) / absoluteLength;
                         deltaTicks = (sequence.Division / relationToQuartNote) / percentageOfBeatNote;
-                        notesTrack.Insert(absoluteTicks, new ChannelMessage(ChannelCommand.NoteOn, 1, 0, 0));
-
                         absoluteTicks += (int)deltaTicks;
-                        notesTrack.Insert(absoluteTicks, new ChannelMessage(ChannelCommand.NoteOn, 1, 0, 0));
                         break;
                     case MusicalSymbolType.TimeSignature:
                         time = staff.GetTime();

@@ -65,6 +65,15 @@ namespace DPA_Musicsheets.MusicFileTypes
             {
                 if (channelMessage.Data2 > 0) // Data2 = loudness
                 {
+                    if (midiEvent.AbsoluteTicks != previousNoteAbsoluteTicks)
+                    {
+                        int dots = 0;
+                        int length = GetNoteLength(midiEvent.AbsoluteTicks, out dots);
+                        Rest rest = new Rest(length);
+                        staff.AddNote(rest);
+
+                        previousNoteAbsoluteTicks = midiEvent.AbsoluteTicks;
+                    }
                     int octave = channelMessage.Data1 / 12;
                     string pitch = Enum.GetName(typeof(MIDInotes), channelMessage.Data1 % 12);
                     note = new Note(pitch, octave);

@@ -57,8 +57,15 @@ namespace DPA_Musicsheets.MusicProperties
             WPFStaffs.Add(note);
         }
 
-        public override string GetString(int previousOctave, out int newOctave)
+        public override string GetString(int previousOctave, string relativePitch, out int newOctave, out string newPitch)
         {
+            List<string> notesOrder= new List<string>() { "c", "d", "e", "f", "g", "a", "b" };
+            int prevIndex = notesOrder.IndexOf(relativePitch);
+            int currentIndex = notesOrder.IndexOf(pitch[0].ToString());
+            if (prevIndex - currentIndex < -3)
+                previousOctave--;
+            if (prevIndex - currentIndex > 3)
+                previousOctave++;
             string result = pitch;
             if (octave < previousOctave)
                 for (int i = octave; i < previousOctave; i++)
@@ -67,6 +74,7 @@ namespace DPA_Musicsheets.MusicProperties
                 for (int i = octave; i > previousOctave; i--)
                     result += "'";
             newOctave = octave;
+            newPitch = pitch[0].ToString();
             result += length;
             for (int i = 0; i < dots; i++)
                 result += ".";

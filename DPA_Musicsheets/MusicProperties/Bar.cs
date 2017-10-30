@@ -30,13 +30,13 @@ namespace DPA_Musicsheets.MusicProperties
             notes.Add(note);
         }
 
-        public string GetNotes(int previousOctave, out int newOctave)
+        public string GetNotes(int previousOctave, string relativePitch, out int newOctave, out string newPitch)
         {
             string result = "";
             for (int i = 0; i < notes.Count; i++)
-                result += notes[i].GetString(previousOctave, out previousOctave) + " ";
-            result += "|";
+                result += notes[i].GetString(previousOctave, relativePitch, out previousOctave, out relativePitch) + " ";
             newOctave = previousOctave;
+            newPitch = relativePitch;
             return result;
         }
 
