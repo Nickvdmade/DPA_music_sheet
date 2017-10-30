@@ -1,173 +1,126 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="DPA_Musicsheets.Managers.FileHandler" Collapsed="true">
-    <Position X="4.5" Y="0.5" Width="1.5" />
-    <AssociationLine Name="Staff1" Type="DPA_Musicsheets.MusicProperties.Staff" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="4.812" Y="1.062" />
-        <Point X="4.812" Y="2.031" />
-        <Point X="3.75" Y="2.031" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="PDF" Type="DPA_Musicsheets.MusicFileTypes.PDF" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="5.5" Y="1.062" />
-        <Point X="5.5" Y="2.375" />
-        <Point X="6.75" Y="2.375" />
-        <Point X="6.75" Y="2.75" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="Midi" Type="DPA_Musicsheets.MusicFileTypes.Midi" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="5.5" Y="1.062" />
-        <Point X="5.5" Y="1.437" />
-        <Point X="8.75" Y="1.437" />
-        <Point X="8.75" Y="2.75" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="Lilypond" Type="DPA_Musicsheets.MusicFileTypes.Lilypond" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="5.5" Y="1.062" />
-        <Point X="5.5" Y="1.437" />
-        <Point X="10.75" Y="1.437" />
-        <Point X="10.75" Y="2.75" />
-      </Path>
-    </AssociationLine>
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAgQAKAMAABAAEAAAABAAYECICgAAEAAAACABAAAACA=</HashCode>
+      <HashCode>EAgQAKAMAAAAAAAAAABAAYECICgAAEAAAACABAAAAAA=</HashCode>
       <FileName>Managers\FileHandler.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Staff1" />
-      <Property Name="PDF" />
-      <Property Name="Midi" />
-      <Property Name="Lilypond" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DPA_Musicsheets.MusicFileTypes.Lilypond" Collapsed="true">
-    <Position X="10" Y="2.75" Width="1.5" />
+    <Position X="4.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAgAAAAICAAAQAAAAAAQAIAAQAAAEAAAAAIAAA=</HashCode>
       <FileName>MusicFileTypes\Lilypond.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.MusicFileTypes.Midi" Collapsed="true">
-    <Position X="8" Y="2.75" Width="1.5" />
+    <Position X="6.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAQAgAAAAKAAAAAAAAAAAIAAAAAABAEAAAAAAAAA=</HashCode>
+      <HashCode>AAgAAAAgAAAAKAAAAAAAAAAAIAAAAAABAEAAAAAAAAA=</HashCode>
       <FileName>MusicFileTypes\Midi.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="MidiMessage" />
-      <Property Name="MIDInotes" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DPA_Musicsheets.MusicFileTypes.MidiMessage" Collapsed="true">
-    <Position X="7" Y="4" Width="1.5" />
+    <Position X="5.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QQEAAAAABEAAAEAgBAAAEAIAAACAIAAAAAAEAAAAAAE=</HashCode>
       <FileName>MusicFileTypes\MidiMessage.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.MusicFileTypes.PDF" Collapsed="true">
-    <Position X="6" Y="2.75" Width="1.5" />
+    <Position X="8.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>MusicFileTypes\PDF.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.MusicProperties.Bar" Collapsed="true">
-    <Position X="2.25" Y="2.75" Width="1.5" />
+    <Position X="1.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAAAAAAAAAAAAAAAACAAAAJiAAYAAAAABAIIAA=</HashCode>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAACAAAAJiAAYAAAAAAAIIAA=</HashCode>
       <FileName>MusicProperties\Bar.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="NoteRestFactory" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DPA_Musicsheets.MusicProperties.Note" Collapsed="true">
-    <Position X="3.25" Y="5" Width="1.5" />
+    <Position X="2.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAAAAQQAAABAAABAAAAAAIAEAAAAAAAAAAAAA=</HashCode>
       <FileName>MusicProperties\Note.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.MusicProperties.NoteRestFactory" Collapsed="true">
-    <Position X="2.25" Y="3.75" Width="1.5" />
+    <Position X="1.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAABEAABAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MusicProperties\NoteRestFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.MusicProperties.Rest" Collapsed="true">
-    <Position X="1" Y="5" Width="1.5" />
+    <Position X="0.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAABAAABAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MusicProperties\Rest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.MusicProperties.Staff" Collapsed="true">
-    <Position X="2.25" Y="1.75" Width="1.5" />
+    <Position X="1.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AYEAGAABEqgABCAFAAAQAIAAAAAJgAQEBAgABABIAAA=</HashCode>
+      <HashCode>AYEAGAABEqAABCAFAAAQAIAAAAAJgAQEBAgABABIAAA=</HashCode>
       <FileName>MusicProperties\Staff.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Bar" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DPA_Musicsheets.Shortcuts.Command" Collapsed="true">
-    <Position X="6" Y="6.5" Width="1.5" />
+    <Position X="10.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Shortcuts\Command.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.Shortcuts.InsertClef" Collapsed="true">
-    <Position X="0.5" Y="7.75" Width="1.5" />
+    <Position X="4.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Shortcuts\InsertClef.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.Shortcuts.InsertTempo" Collapsed="true">
-    <Position X="2.75" Y="7.75" Width="1.5" />
+    <Position X="7" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Shortcuts\InsertTempo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.Shortcuts.InsertTime" Collapsed="true">
-    <Position X="5" Y="7.75" Width="1.5" />
+    <Position X="9.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAABgAAAAAAAAAAAAAA=</HashCode>
       <FileName>Shortcuts\InsertTime.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.Shortcuts.OpenFile" Collapsed="true">
-    <Position X="7.25" Y="7.75" Width="1.5" />
+    <Position X="11.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Shortcuts\OpenFile.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.Shortcuts.SaveAsLily" Collapsed="true">
-    <Position X="9.5" Y="7.75" Width="1.5" />
+    <Position X="13.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Shortcuts\SaveAsLily.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DPA_Musicsheets.Shortcuts.SaveToPDF" Collapsed="true">
-    <Position X="11.75" Y="7.75" Width="1.5" />
+    <Position X="16" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Shortcuts\SaveToPDF.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="DPA_Musicsheets.MusicFileTypes.MIDInotes" Collapsed="true">
-    <Position X="9" Y="4" Width="1.5" />
+    <Position X="7.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAOAFAAAAAAAAAAAAAAAAAAC+AQAAAAAAAAA=</HashCode>
       <FileName>MusicFileTypes\MIDInotes.cs</FileName>

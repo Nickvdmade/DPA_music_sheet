@@ -182,7 +182,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram.cd" />
     <None Include="Files\Doorklinken.ly" />
     <None Include="Files\Doorklinken.pdf" />
     <None Include="Files\Herhaling_metAlternatief.ly" />
