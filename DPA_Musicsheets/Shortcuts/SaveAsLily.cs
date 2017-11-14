@@ -1,28 +1,34 @@
 ﻿using System.IO;
 using System.Windows;
+using System.Windows.Input;
 using DPA_Musicsheets.Managers;
 using DPA_Musicsheets.ViewModels;
 using Microsoft.Win32;
 
 namespace DPA_Musicsheets.Shortcuts
 {
-    class SaveAsLily : Command
+    class SaveAsLily
     {
-        public override void Execute(FileHandler fileHandler, MainViewModel mainViewModel)
+        public static bool Execute(FileHandler fileHandler, MainViewModel mainViewModel)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog() {Filter = "Lilypond|*.ly"};
-            if (saveFileDialog.ShowDialog() == true)
+            if (Keyboard.IsKeyDown(Key.S))
             {
-                string extension = Path.GetExtension(saveFileDialog.FileName);
-                if (extension.EndsWith(".ly"))
+                SaveFileDialog saveFileDialog = new SaveFileDialog() {Filter = "Lilypond|*.ly"};
+                if (saveFileDialog.ShowDialog() == true)
                 {
-                    fileHandler.SaveToLilypond(saveFileDialog.FileName);
+                    string extension = Path.GetExtension(saveFileDialog.FileName);
+                    if (extension.EndsWith(".ly"))
+                    {
+                        fileHandler.SaveToLilypond(saveFileDialog.FileName);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Extension {extension} is not supported.");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show($"Extension {extension} is not supported.");
-                }
+                return true;
             }
+            return false;
         }
     }
 }

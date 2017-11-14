@@ -1,10 +1,18 @@
-﻿using DPA_Musicsheets.Managers;
+﻿using System.Windows.Input;
+using DPA_Musicsheets.Managers;
 using DPA_Musicsheets.ViewModels;
 
 namespace DPA_Musicsheets.Shortcuts
 {
-    abstract class Command
+    class Command
     {
-        public abstract void Execute(FileHandler fileHandler, MainViewModel mainViewModel);
+        public static bool Execute(FileHandler fileHandler, MainViewModel mainViewModel)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control)
+                return OpenFile.Execute(fileHandler, mainViewModel);
+            if (Keyboard.Modifiers == ModifierKeys.Alt)
+                return InsertClef.Execute(fileHandler, mainViewModel);
+            return false;
+        }
     }
 }
