@@ -1,23 +1,17 @@
 ﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.MusicProperties
 {
-    public class Note : NoteRestFactory
+    public class Note : NoteRest
     {
         private string pitch;
         private int dots;
         private int octave;
 
-        public Note(string notePitch, int noteOctave)
+        public Note(string notePitch, int noteOctave, int noteLength, int dotAmount)
         {
             pitch = notePitch;
             octave = noteOctave - 1;
-        }
-
-        public override void SetLength(int noteLength, int dotAmount)
-        {
             length = noteLength;
             dots = dotAmount;
         }
@@ -46,15 +40,12 @@ namespace DPA_Musicsheets.MusicProperties
             return lengths;
         }
 
-        public override void GetMusicSymbols(List<MusicalSymbol> WPFStaffs)
+        public override void GetInfo(ref string Notepitch, ref int Noteoctave, ref int Notelength, ref int Notedots)
         {
-            int alter = 0;
-            alter += Regex.Matches(pitch, "is").Count;
-            alter -= Regex.Matches(pitch, "es|as").Count;
-            var note = new PSAMControlLibrary.Note(pitch[0].ToString().ToUpper(), alter, octave,
-                (MusicalSymbolDuration) length, NoteStemDirection.Up, NoteTieType.None,
-                new List<NoteBeamType>() {NoteBeamType.Single}) {NumberOfDots = dots};
-            WPFStaffs.Add(note);
+            Notepitch = pitch;
+            Noteoctave = octave;
+            Notelength = length;
+            Notedots = dots;
         }
 
         public override string GetString(int previousOctave, string relativePitch, out int newOctave, out string newPitch)

@@ -68,7 +68,7 @@ namespace DPA_Musicsheets.MusicFileTypes
             metaTrack.Insert(0 /* Insert at 0 ticks*/, new MetaMessage(MetaType.Tempo, tempo));
             
             List<MusicalSymbol> WPFStaffs = new List<MusicalSymbol>();
-            staff.GetMusicSymbols(WPFStaffs);
+            WPFManager.getMusicSymbols(staff, WPFStaffs);
             foreach (MusicalSymbol musicalSymbol in WPFStaffs)
             {
                 int[] time;

@@ -63,7 +63,7 @@ namespace DPA_Musicsheets.Managers
         public void ShowStaff()
         {
             WPFStaffs.Clear();
-            Staff.GetMusicSymbols(WPFStaffs);
+            WPFManager.getMusicSymbols(Staff, WPFStaffs);
             WPFStaffsChanged?.Invoke(this, new WPFStaffsEventArgs() { Symbols = WPFStaffs });
 
             Lilypond lily = new Lilypond("");

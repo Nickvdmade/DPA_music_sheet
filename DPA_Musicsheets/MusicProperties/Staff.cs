@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.MusicProperties
 {
@@ -125,7 +124,7 @@ namespace DPA_Musicsheets.MusicProperties
             }
         }
 
-        public void AddNote(NoteRestFactory note)
+        public void AddNote(NoteRest note)
         {
             Bar bar = bars[bars.Count - 1];
             if (bar.IsFull(bars))
@@ -142,17 +141,9 @@ namespace DPA_Musicsheets.MusicProperties
                 bar.Fill();
         }
 
-        public void GetMusicSymbols(List<MusicalSymbol> WPFStaffs)
+        public List<Bar> GetBars()
         {
-            Clef clef = new Clef(ClefType.GClef, 2);
-            if (clefType == "bass")
-            {
-                clef = new Clef(ClefType.CClef, 4);
-            }
-            WPFStaffs.Add(clef);
-            WPFStaffs.Add(new TimeSignature(TimeSignatureType.Numbers, (UInt32)amount, (UInt32)type));
-            foreach (Bar bar in bars)
-                bar.GetMusicSymbols(WPFStaffs);
+            return bars;
         }
 
         private int GetPowerValue(int x)

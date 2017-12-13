@@ -63,36 +63,36 @@ namespace DPA_Musicsheets.MusicFileTypes
             var channelMessage = midiMessage as ChannelMessage;
             if (channelMessage.Command == ChannelCommand.NoteOn)
             {
+                NoteRestFactory factory = null;
+                string pitch = "";
+                int octave = 0;
+                int length = 0;
+                int dots = 0;
                 if (channelMessage.Data2 > 0) // Data2 = loudness
                 {
                     if (midiEvent.AbsoluteTicks != previousNoteAbsoluteTicks)
                     {
-                        int dots = 0;
-                        int length = GetNoteLength(midiEvent.AbsoluteTicks, out dots);
-                        Rest rest = new Rest(length);
-                        staff.AddNote(rest);
+                        pitch = "r";
+                        factory = NoteRestFactory.getFactory(pitch[0]);
+                        length = GetNoteLength(midiEvent.AbsoluteTicks, out dots);
 
                         previousNoteAbsoluteTicks = midiEvent.AbsoluteTicks;
                     }
-                    int octave = channelMessage.Data1 / 12;
-                    string pitch = Enum.GetName(typeof(MIDInotes), channelMessage.Data1 % 12);
-                    note = new Note(pitch, octave);
 
                     startedNoteIsClosed = false;
                 }
                 else if (!startedNoteIsClosed)
                 {
-                    int dots = 0;
-                    int length = GetNoteLength(midiEvent.AbsoluteTicks, out dots);
-                    note.SetLength(length, dots);
-                    staff.AddNote(note);
+                    octave = channelMessage.Data1 / 12;
+                    pitch = Enum.GetName(typeof(MIDInotes), channelMessage.Data1 % 12);
+                    factory = NoteRestFactory.getFactory(pitch[0]);
+                    length = GetNoteLength(midiEvent.AbsoluteTicks, out dots);
 
                     previousNoteAbsoluteTicks = midiEvent.AbsoluteTicks;
                     startedNoteIsClosed = true;
                 }
-                else
-                {
-                }
+                if (factory != null)
+                    staff.AddNote(factory.create(pitch, octave, length, dots));
             }
         }
 

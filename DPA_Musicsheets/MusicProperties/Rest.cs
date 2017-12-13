@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using PSAMControlLibrary;
-
-namespace DPA_Musicsheets.MusicProperties
+﻿namespace DPA_Musicsheets.MusicProperties
 {
-    class Rest : NoteRestFactory
+    class Rest : NoteRest
     {
         public Rest(int length)
         {
@@ -15,10 +12,10 @@ namespace DPA_Musicsheets.MusicProperties
             return 1.0 / length;
         }
 
-        public override void GetMusicSymbols(List<MusicalSymbol> WPFStaffs)
+        public override void GetInfo(ref string Notepitch, ref int Noteoctave, ref int Notelength, ref int Notedots)
         {
-            var rest = new PSAMControlLibrary.Rest((MusicalSymbolDuration) length);
-            WPFStaffs.Add(rest);
+            Notepitch = "r";
+            Notelength = length;
         }
 
         public override string GetString(int previousOctave, string relativePitch, out int newOctave, out string newPitch)

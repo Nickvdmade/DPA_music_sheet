@@ -1,34 +1,31 @@
-﻿using System.Collections.Generic;
-using PSAMControlLibrary;
-
-namespace DPA_Musicsheets.MusicProperties
+﻿namespace DPA_Musicsheets.MusicProperties
 {
-    public class NoteRestFactory
+    abstract class NoteRestFactory
     {
-        protected int length;
+        private static NoteFactory NOTE_FACTORY = new NoteFactory();
+        private static RestFactory REST_FACTORY = new RestFactory();
 
-        public virtual double GetLength()
+        public static NoteRestFactory getFactory(char type)
         {
-            return 0;
+            NoteRestFactory factory = null;
+            switch (type)
+            {
+                case 'r':
+                    factory = REST_FACTORY;
+                    break;
+                case 'a':
+                case 'b':
+                case 'c':
+                case 'd':
+                case 'e':
+                case 'f':
+                case 'g':
+                    factory = NOTE_FACTORY;
+                    break;
+            }
+            return factory;
         }
 
-        public virtual void SetLength(int noteLength, int dotAmount)
-        {
-        }
-        public virtual void GetMusicSymbols(List<MusicalSymbol> WPFStaffs)
-        {
-        }
-
-        public virtual Dictionary<int, int> GetLength(Dictionary<int, int> lengths)
-        {
-            return lengths;
-        }
-
-        public virtual string GetString(int previousOctave, string relativePitch, out int newOctave, out string newPitch)
-        {
-            newOctave = previousOctave;
-            newPitch = relativePitch;
-            return "";
-        }
+        public abstract NoteRest create(string pitch, int octave, int length, int dots);
     }
 }

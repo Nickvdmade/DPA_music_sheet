@@ -104,6 +104,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Managers\MidiSequenceEventArgs.cs" />
+    <Compile Include="Managers\WPFManager.cs" />
     <Compile Include="Managers\WPFStaffsEventArgs.cs" />
     <Compile Include="Managers\LilypondEventArgs.cs" />
     <Compile Include="Messages\CurrentStateMessage.cs" />
@@ -115,8 +116,11 @@
     <Compile Include="MusicFileTypes\PDF.cs" />
     <Compile Include="MusicProperties\Bar.cs" />
     <Compile Include="MusicProperties\Note.cs" />
+    <Compile Include="MusicProperties\NoteRest.cs" />
     <Compile Include="MusicProperties\NoteRestFactory.cs" />
+    <Compile Include="MusicProperties\NoteFactory.cs" />
     <Compile Include="MusicProperties\Rest.cs" />
+    <Compile Include="MusicProperties\RestFactory.cs" />
     <Compile Include="MusicProperties\Staff.cs" />
     <Compile Include="Shortcuts\Command.cs" />
     <Compile Include="Shortcuts\InsertClef.cs" />

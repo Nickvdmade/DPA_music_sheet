@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using PSAMControlLibrary;
 
 namespace DPA_Musicsheets.MusicProperties
 {
-    class Bar //maat
+    public class Bar //maat
     {
         private int amount;
         private int type;
-        private List<NoteRestFactory> notes;
+        private List<NoteRest> notes;
 
         public Bar()
         {
-            notes = new List<NoteRestFactory>();
+            notes = new List<NoteRest>();
         }
 
         public void SetAmount(int amount)
@@ -25,7 +24,7 @@ namespace DPA_Musicsheets.MusicProperties
             this.type = type;
         }
 
-        public void AddNote(NoteRestFactory note)
+        public void AddNote(NoteRest note)
         {
             notes.Add(note);
         }
@@ -45,7 +44,7 @@ namespace DPA_Musicsheets.MusicProperties
             Dictionary<int, int> lengths = new Dictionary<int, int>();
             for (int i = 32; i >= 1; i = i / 2)
                 lengths[i] = 0;
-            foreach (NoteRestFactory note in notes)
+            foreach (NoteRest note in notes)
             {
                 lengths = note.GetLength(lengths);
             }
@@ -98,7 +97,7 @@ namespace DPA_Musicsheets.MusicProperties
         public bool IsFull(List<Bar> bars)
         {
             double length = 0;
-            foreach (NoteRestFactory note in notes)
+            foreach (NoteRest note in notes)
             {
                 length += note.GetLength();
             }
@@ -112,7 +111,7 @@ namespace DPA_Musicsheets.MusicProperties
             }
             if (length > (double) amount / type)
             {
-                NoteRestFactory lastNote = notes[notes.Count - 1];
+                NoteRest lastNote = notes[notes.Count - 1];
                 notes.Remove(lastNote);
                 Bar bar = new Bar();
                 bar.SetAmount(amount);
@@ -125,11 +124,9 @@ namespace DPA_Musicsheets.MusicProperties
             return false;
         }
 
-        public void GetMusicSymbols(List<MusicalSymbol> WPFStaffs)
+        public List<NoteRest> GetNotes()
         {
-            foreach(NoteRestFactory note in notes)
-                note.GetMusicSymbols(WPFStaffs);
-            WPFStaffs.Add(new Barline());
+            return notes;
         }
     }
 }

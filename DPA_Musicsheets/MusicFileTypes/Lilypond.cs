@@ -113,14 +113,16 @@ namespace DPA_Musicsheets.MusicFileTypes
                         staff.AddBar();
                         break;
                     default:
-                        if (new Regex(@"[a-g][,'eis]*[0-9]+[.]*").IsMatch(s))
+                        if (s.Length != 0)
                         {
-                            staff.AddNote(AddNote(s, lastPitch));
-                            lastPitch = s[0].ToString();
-                        }
-                        if (new Regex(@"r.*?[0-9][.]*").IsMatch(s))
-                        {
-                            staff.AddNote(AddRest(s));
+                            NoteRestFactory factory = NoteRestFactory.getFactory(s[0]);
+                            if (factory != null)
+                            {
+                                int length;
+                                int dots;
+                                getInfo(s, ref lastPitch, out length, out dots);
+                                staff.AddNote(factory.create(lastPitch, relativeOctave + 1, length, dots));
+                            }
                         }
                         break;
                 }
@@ -128,7 +130,7 @@ namespace DPA_Musicsheets.MusicFileTypes
             return staff;
         }
 
-        private NoteRestFactory AddNote(string info, string prevPitch)
+        private void getInfo(string info, ref string lastPitch, out int length, out int dots)
         {
             string pitch;
             if (Regex.Matches(info, "is").Count > 0)
@@ -138,28 +140,22 @@ namespace DPA_Musicsheets.MusicFileTypes
             else
                 pitch = info[0].ToString();
             List<string> notesOrder = new List<string>() { "c", "d", "e", "f", "g", "a", "b" };
-            int prevIndex = notesOrder.IndexOf(prevPitch);
-            int currentIndex = notesOrder.IndexOf(info[0].ToString());
-            if (prevIndex - currentIndex < -3)
-                relativeOctave--;
-            if (prevIndex - currentIndex > 3)
-                relativeOctave++;
-            if (Regex.Matches(info, "\'").Count > 0)
-                relativeOctave++;
-            if (Regex.Matches(info, ",").Count > 0)
-                relativeOctave--;
-            NoteRestFactory note = new Note(pitch, relativeOctave + 1);
-            int length = Int32.Parse(Regex.Match(info, @"\d+").Value);
-            int dots = info.Count(c => c.Equals('.'));
-            note.SetLength(length, dots);
-            return note;
-        }
-
-        private NoteRestFactory AddRest(string info)
-        {
-            int length = Int32.Parse(info[1].ToString());
-            NoteRestFactory rest = new Rest(length);
-            return rest;
+            int prevIndex = notesOrder.IndexOf(lastPitch);
+            int currentIndex = notesOrder.IndexOf(pitch);
+            if (currentIndex != -1)
+            {
+                if (prevIndex - currentIndex < -3)
+                    relativeOctave--;
+                if (prevIndex - currentIndex > 3)
+                    relativeOctave++;
+                if (Regex.Matches(info, "\'").Count > 0)
+                    relativeOctave++;
+                if (Regex.Matches(info, ",").Count > 0)
+                    relativeOctave--;
+            }
+            length = Int32.Parse(Regex.Match(info, @"\d+").Value);
+            dots = info.Count(c => c.Equals('.'));
+            lastPitch = pitch;
         }
     }
 }
